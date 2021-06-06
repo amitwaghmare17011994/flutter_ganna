@@ -21,7 +21,10 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         backgroundColor: Colors.grey,
         appBar: AppBar(
-          title: Text('First Screen'),
+          title: Text(
+            'Ganna',
+            style: TextStyle(color: Colors.white, fontStyle: FontStyle.italic),
+          ),
         ),
         body: Container(
           child: FutureBuilder<SongModel>(
