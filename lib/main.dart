@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ganna/screens/home_screen/home_screen.dart';
+import 'package:ganna/screens/song_screen/song_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,12 +13,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       initialRoute: '/',
+      debugShowCheckedModeBanner: false,
       routes: {
-        // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => HomeScreen(),
-        // When navigating to the "/second" route, build the SecondScreen widget.
       },
-      theme: ThemeData(primarySwatch: Colors.purple),
+      theme: ThemeData(primarySwatch: Colors.deepPurple),
     );
   }
 }

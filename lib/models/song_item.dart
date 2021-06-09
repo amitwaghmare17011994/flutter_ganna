@@ -53,9 +53,9 @@ class SongItem {
   String? collectionViewUrl;
   String? trackViewUrl;
   String? previewUrl;
-  String artworkUrl30;
+  String? artworkUrl30;
   String? artworkUrl60;
-  String artworkUrl100;
+  String? artworkUrl100;
   double? collectionPrice;
   double? trackPrice;
   DateTime releaseDate;

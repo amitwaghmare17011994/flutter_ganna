@@ -3,7 +3,10 @@ import 'package:ganna/models/song_item.dart';
 
 class SongCard extends StatefulWidget {
   final SongItem songItem;
-  SongCard({Key? key, required this.songItem}) : super(key: key);
+  final ValueSetter<SongItem> onSongSelect;
+
+  SongCard({Key? key, required this.songItem, required this.onSongSelect})
+      : super(key: key);
 
   _SongCardState createState() => _SongCardState();
 }
@@ -14,14 +17,17 @@ class _SongCardState extends State<SongCard> {
     SongItem songItem = widget.songItem;
     var artistName = songItem.artistName != null ? songItem.artistName : '';
     var songName = songItem.trackName != null ? songItem.trackName : '';
+    var img = songItem.artworkUrl100 != null ? songItem.artworkUrl100 : '';
     return Card(
         clipBehavior: Clip.hardEdge,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            widget.onSongSelect(songItem);
+          },
           child: Column(
             children: [
               Ink.image(
-                image: NetworkImage(songItem.artworkUrl100),
+                image: NetworkImage(img!),
                 width: 900,
                 height: 400,
                 fit: BoxFit.fill,
