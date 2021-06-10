@@ -17,33 +17,31 @@ class SongScreen extends StatefulWidget {
 class SongScreenState extends State<SongScreen> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     var img = widget.songItem.artworkUrl100 != null
         ? widget.songItem.artworkUrl100
         : '';
-
+    var titile = widget.songItem.trackName! + ' ' + widget.songItem.artistName!;
     return Scaffold(
         backgroundColor: Colors.white,
         body: CustomScrollView(
           slivers: <Widget>[
             SliverAppBar(
-              title: Text(widget.songItem.trackName!),
+              // actions: [SongPlayer(songItem: widget.songItem)],
+              title: Text(titile),
               floating: true,
-              expandedHeight: 500,
+              expandedHeight: height - 100,
               flexibleSpace: FlexibleSpaceBar(
-                title: Text(widget.songItem.artistName!,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16.0,
-                    )),
-                background: Image.network(
-                  img!,
-                  fit: BoxFit.cover,
-                ),
-              ),
+                  background: Container(
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: NetworkImage(img!), fit: BoxFit.cover)),
+                child: SongPlayer(songItem: widget.songItem),
+              )),
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                (context, index) => SongPlayer(songItem: widget.songItem),
+                (context, index) => Text('s'),
                 childCount: 100,
               ),
             )
