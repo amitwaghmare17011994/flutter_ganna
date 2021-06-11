@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:ganna/models/song_item.dart';
+import 'package:ganna/widgets/skeleton/skeleton.dart';
 
 class SongCard extends StatefulWidget {
   final SongItem songItem;
@@ -26,11 +28,11 @@ class _SongCardState extends State<SongCard> {
           },
           child: Column(
             children: [
-              Ink.image(
-                image: NetworkImage(img!),
-                width: 900,
-                height: 400,
-                fit: BoxFit.fill,
+              CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: img!,
+                width: 400,
+                placeholder: (context, url) => Skeleton(),
               ),
               ListTile(
                 leading: Icon(

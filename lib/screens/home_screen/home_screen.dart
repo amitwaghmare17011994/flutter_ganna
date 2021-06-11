@@ -4,6 +4,8 @@ import 'package:ganna/animations/slide_right_route/slide_right_route.dart';
 import 'package:ganna/apis/songs_api.dart';
 import 'package:ganna/models/songs.dart';
 import 'package:ganna/screens/song_screen/song_screen.dart';
+import 'package:ganna/widgets/skeleton/skeleton.dart';
+import 'package:ganna/widgets/skeleton_card/skeleton_card.dart';
 import 'package:ganna/widgets/song_card/SongCard.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -52,7 +54,17 @@ class HomeScreenState extends State<HomeScreen> {
                   ],
                 );
               }
-              return Center(child: CircularProgressIndicator());
+              return CustomScrollView(slivers: <Widget>[
+                SliverAppBar(
+                  title: Text("Gaana"),
+                  floating: true,
+                  expandedHeight: 50,
+                ),
+                SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                        (context, index) => SkeletonCard(),
+                        childCount: 10))
+              ]);
             },
           ),
         ));
