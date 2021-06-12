@@ -8,7 +8,7 @@ class SongsApi {
     try {
       var client = http.Client();
       var response = await client
-          .get(Uri.parse("https://itunes.apple.com/search/?term=zarasa"));
+          .get(Uri.parse("https://itunes.apple.com/search/?term=fanaa"));
 
       var jsonString = response.body;
 

@@ -16,7 +16,7 @@ class _SkeletonState extends State<Skeleton> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 240,
+      height: 350,
       child: Row(
         children: [
           Expanded(
@@ -28,7 +28,7 @@ class _SkeletonState extends State<Skeleton> {
                   ),
                 ),
                 child: ListView.builder(
-                    itemCount: 5,
+                    itemCount: 9,
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: index > 0
