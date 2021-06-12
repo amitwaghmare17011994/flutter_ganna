@@ -22,13 +22,21 @@ class _LoginScrenState extends State<LoginScren> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.redAccent,
       body: ChangeNotifierProvider(
         create: (context) => GoogleSignInProvider(),
         child: Column(
           children: [
             Spacer(),
-            Align(
-                child: StreamBuilder(
+            Center(
+                child: CircleAvatar(
+              child: Icon(Icons.music_note, size: 50),
+              radius: 50,
+            )),
+            Spacer(),
+            Spacer(),
+
+            StreamBuilder(
               stream: FirebaseAuth.instance.authStateChanges(),
               builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
                 final provider =
@@ -40,8 +48,29 @@ class _LoginScrenState extends State<LoginScren> {
 
                 return SignInBUtton();
               },
-            )),
+            ),
+
             Spacer(),
+
+            // Padding(
+            //     padding: EdgeInsets.only(top: 0),
+            //     child: StreamBuilder(
+            //       stream: FirebaseAuth.instance.authStateChanges(),
+            //       builder:
+            //           (BuildContext context, AsyncSnapshot<User?> snapshot) {
+            //         final provider = Provider.of<GoogleSignInProvider>(context,
+            //             listen: true);
+
+            //         if (snapshot.hasData) {
+            //           return MiddleWare();
+            //         }
+
+            //         return SignInBUtton();
+            //       },
+            //     )),
+            // Icon(Icons.music_note, size: 100),
+
+            // Spacer(),
           ],
         ),
       ),
