@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "313899256264",
+    "project_id": "gaana-c00e1",
+    "storage_bucket": "gaana-c00e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313899256264:android:07821895dea28756f158fd",
+        "android_client_info": {
+          "package_name": "com.example.ganna"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313899256264-vbju6au140tiqg7atuj7s4kf0p6qr6mc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ganna",
+            "certificate_hash": "9c696b4760e7404788a5537c224d2fba022eeb9c"
+          }
+        },
+        {
+          "client_id": "313899256264-3opevqu42augmgrql6ha1a94vaero2h3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBcGmF32O_OpxxcDa8fx-TpVBs0cO1nD90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313899256264-3opevqu42augmgrql6ha1a94vaero2h3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
