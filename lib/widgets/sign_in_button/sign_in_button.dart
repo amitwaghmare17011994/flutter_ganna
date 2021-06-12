@@ -9,14 +9,36 @@ class SignInBUtton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       GestureDetector(
           onTap: () {
             final provider =
                 Provider.of<GoogleSignInProvider>(context, listen: false);
             provider.login();
           },
-          child: CircleAvatar(child: FaIcon(FontAwesomeIcons.google)))
+          child: CircleAvatar(child: FaIcon(FontAwesomeIcons.google))),
+      Padding(
+          padding: EdgeInsets.only(left: 30),
+          child: GestureDetector(
+              onTap: () {},
+              child: CircleAvatar(
+                  backgroundColor: Colors.blueAccent,
+                  child: FaIcon(FontAwesomeIcons.facebookF)))),
+      Padding(
+          padding: EdgeInsets.only(left: 30),
+          child: GestureDetector(
+              onTap: () {},
+              child: CircleAvatar(
+                  backgroundColor: Colors.lightBlue,
+                  child:
+                      FaIcon(FontAwesomeIcons.twitter, color: Colors.white)))),
+      Padding(
+          padding: EdgeInsets.only(left: 30),
+          child: GestureDetector(
+              onTap: () {},
+              child: CircleAvatar(
+                  child:
+                      FaIcon(FontAwesomeIcons.instagram, color: Colors.white))))
     ]);
   }
 }

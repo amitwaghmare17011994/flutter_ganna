@@ -13,7 +13,9 @@ class _SkeletonCardState extends State<SkeletonCard> {
   Widget build(BuildContext context) {
     return Card(
       clipBehavior: Clip.antiAlias,
-      child: Container(child: Skeleton()),
+      child: Container(
+        child: Skeleton(),
+      ),
     );
   }
 }
