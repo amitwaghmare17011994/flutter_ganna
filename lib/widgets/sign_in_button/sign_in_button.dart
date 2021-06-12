@@ -16,13 +16,6 @@ class SignInBUtton extends StatelessWidget {
             provider.login();
           },
           child: Text('Sign In With Google')),
-      OutlinedButton(
-          onPressed: () {
-            final provider =
-                Provider.of<GoogleSignInProvider>(context, listen: false);
-            provider.logout();
-          },
-          child: Text('Sign Out With Google'))
     ]);
   }
 }

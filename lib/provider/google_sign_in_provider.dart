@@ -12,7 +12,7 @@ class GoogleSignInProvider extends ChangeNotifier {
   bool get isLoading => loading;
 
   set isLoading(bool _isLoading) {
-    isLoading = _isLoading;
+    loading = _isLoading;
     notifyListeners();
   }
 
