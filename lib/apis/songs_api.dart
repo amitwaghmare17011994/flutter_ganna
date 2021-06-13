@@ -4,11 +4,11 @@ import 'package:ganna/models/songs.dart';
 import 'package:http/http.dart' as http;
 
 class SongsApi {
-  Future<SongModel> getSongs() async {
+  Future<SongModel> getSongs(String? term) async {
     try {
       var client = http.Client();
-      var response = await client
-          .get(Uri.parse("https://itunes.apple.com/search/?term=fanaa"));
+      var response = await client.get(Uri.parse(
+          'https://itunes.apple.com/search/?term=${term == '' ? 'tu hi meri shab hai' : term}'));
 
       var jsonString = response.body;
 

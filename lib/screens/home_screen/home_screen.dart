@@ -19,10 +19,21 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   late Future<SongModel> songModel;
+  var searchTextController = TextEditingController(text: '');
+  var scrollController = ScrollController();
+  // .addListener(() {});
+
   @override
   void initState() {
-    songModel = SongsApi().getSongs();
+    songModel = SongsApi().getSongs('');
     super.initState();
+  }
+
+  void onSearchSubmited(value) {
+    songModel = SongsApi().getSongs(value);
+    setState(() {
+      songModel = songModel;
+    });
   }
 
   @override
@@ -37,12 +48,44 @@ class HomeScreenState extends State<HomeScreen> {
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return CustomScrollView(
+                    controller: scrollController,
                     slivers: <Widget>[
                       SliverAppBar(
                         title: Text("Gaana"),
                         // floating: true,
-                        expandedHeight: 50,
+                        expandedHeight: 120,
                         actions: <Widget>[Menu()],
+                        flexibleSpace: FlexibleSpaceBar(
+                          background: Container(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Padding(
+                                    padding: EdgeInsets.all(10),
+                                    child: TextField(
+                                      controller: searchTextController,
+                                      onSubmitted: onSearchSubmited,
+                                      onChanged: onSearchSubmited,
+                                      decoration: InputDecoration(
+                                          prefixIcon: Icon(Icons.search),
+                                          suffixIcon: GestureDetector(
+                                              onTap: () {
+                                                onSearchSubmited('');
+                                                searchTextController.text = '';
+                                              },
+                                              child: Icon(Icons.close_rounded)),
+                                          fillColor: Colors.white,
+                                          filled: true,
+                                          contentPadding: EdgeInsets.all(10),
+                                          border: new OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(50)),
+                                          hintText: 'Search...'),
+                                    )),
+                              ],
+                            ),
+                          ),
+                        ),
                       ),
                       SliverList(
                         delegate: SliverChildBuilderDelegate(

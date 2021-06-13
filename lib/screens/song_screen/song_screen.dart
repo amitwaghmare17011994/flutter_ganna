@@ -44,6 +44,7 @@ class SongScreenState extends State<SongScreen> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+
     var img = widget.songItem.artworkUrl100 != null
         ? widget.songItem.artworkUrl100
         : '';

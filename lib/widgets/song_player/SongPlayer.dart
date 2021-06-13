@@ -30,13 +30,18 @@ class _SongPlayerState extends State<SongPlayer> {
 
   @override
   Widget build(BuildContext context) {
-    var icon = isPlay ? Icons.play_arrow : Icons.pause;
+    var icon = isPlay ? Icons.play_circle_fill : Icons.pause_circle_filled;
 
     return Container(
       height: 100,
       width: 100,
       child: GestureDetector(
-          child: Icon(icon, color: Colors.white, size: 100), onTap: togglePlay),
+          child: Icon(
+            icon,
+            size: 100,
+            color: Colors.redAccent,
+          ),
+          onTap: togglePlay),
     );
   }
 }
