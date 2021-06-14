@@ -5,6 +5,7 @@ import 'package:ganna/apis/songs_api.dart';
 import 'package:ganna/models/songs.dart';
 import 'package:ganna/provider/google_sign_in_provider.dart';
 import 'package:ganna/screens/song_screen/song_screen.dart';
+import 'package:ganna/widgets/floating_search_bar/floating_search_bar.dart';
 import 'package:ganna/widgets/menu/menu.dart';
 import 'package:ganna/widgets/sign_in_button/sign_in_button.dart';
 import 'package:ganna/widgets/skeleton/skeleton.dart';
@@ -19,14 +20,27 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   late Future<SongModel> songModel;
+  late ScrollController scrollController;
+  late bool hideSearch = true;
   var searchTextController = TextEditingController(text: '');
-  var scrollController = ScrollController();
   // .addListener(() {});
 
   @override
   void initState() {
-    songModel = SongsApi().getSongs('');
     super.initState();
+    songModel = SongsApi().getSongs('');
+
+    scrollController = ScrollController();
+    scrollController.addListener(() {
+      setState(() {
+        hideSearch = false;
+      });
+    });
+  }
+
+  bool get isAppBarExpanded {
+    return scrollController.hasClients &&
+        scrollController.offset > (200 - kToolbarHeight);
   }
 
   void onSearchSubmited(value) {
@@ -40,6 +54,10 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
+        floatingActionButton:
+            Visibility(child: FloatingSearchBar(), visible: !hideSearch),
+        // floatingActionButton: hideSearch ? Container() : FloatingSearchBar(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
         body: ChangeNotifierProvider(
           create: (context) => GoogleSignInProvider(),
           child: Container(
@@ -100,7 +118,7 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                           childCount: snapshot.data!.results.length,
                         ),
-                      )
+                      ),
                     ],
                   );
                 }

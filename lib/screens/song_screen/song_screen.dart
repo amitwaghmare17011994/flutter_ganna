@@ -13,32 +13,8 @@ class SongScreen extends StatefulWidget {
 }
 
 class SongScreenState extends State<SongScreen> {
-  final player = AudioPlayer();
-
-  @override
-  void initState() {
-    super.initState();
-    var url = widget.songItem.previewUrl;
-    player.play(url!);
-  }
-
-  void togglePlay(isPlay) async {
-    var url = widget.songItem.previewUrl;
-
-    if (isPlay) {
-      if (url != null) {
-        await player.play(url);
-      }
-    } else {
-      await player.pause();
-    }
-  }
-
   Future<bool> onBackPressed() async {
-    int res = await player.stop();
-    Navigator.pop(context, false);
-    // ignore: unnecessary_null_comparison
-    return res == null;
+    return true;
   }
 
   @override
@@ -66,8 +42,7 @@ class SongScreenState extends State<SongScreen> {
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: NetworkImage(img!), fit: BoxFit.cover)),
-                  child: SongPlayer(
-                      songItem: widget.songItem, togglePlay: togglePlay),
+                  child: SongPlayer(songItem: widget.songItem),
                 )),
               ),
               SliverList(

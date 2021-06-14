@@ -51,11 +51,7 @@ class _LoginScrenState extends State<LoginScren> {
                 final provider =
                     Provider.of<GoogleSignInProvider>(context, listen: true);
 
-                if (snapshot.hasData) {
-                  return MiddleWare();
-                }
-
-                return SignInBUtton();
+                return SignInButton();
               },
             ),
             Spacer(),
