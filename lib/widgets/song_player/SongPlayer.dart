@@ -96,6 +96,20 @@ class _SongPlayerState extends State<SongPlayer> {
                   player.seek(newDuration);
                 });
               }),
+          Row(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Text(
+                  '       ${_position.toString().split(":")[1]} :  ${_position.toString().split(":")[2].split('.')[0]} ',
+                  style: TextStyle(color: Colors.redAccent),
+                ),
+              ),
+              Text(
+                  '${_duration.toString().split(":")[1]} :  ${_duration.toString().split(":")[2].split('.')[0]}       ',
+                  style: TextStyle(color: Colors.redAccent))
+            ],
+          ),
         ]),
       ),
     );

@@ -45,12 +45,12 @@ class SongScreenState extends State<SongScreen> {
                   child: SongPlayer(songItem: widget.songItem),
                 )),
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => Text('s'),
-                  childCount: 100,
-                ),
-              )
+              // SliverList(
+              //   delegate: SliverChildBuilderDelegate(
+              //     (context, index) => Text('s'),
+              //     childCount: 100,
+              //   ),
+              // )
             ],
           )),
     );
