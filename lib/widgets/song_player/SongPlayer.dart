@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:ganna/models/song_item.dart';
 import 'package:flutter/foundation.dart';
+import 'package:ganna/widgets/music_virtualizer/music_virtualizer.dart';
 
 class SongPlayer extends StatefulWidget {
   final SongItem songItem;
@@ -14,6 +16,7 @@ class SongPlayer extends StatefulWidget {
 }
 
 class _SongPlayerState extends State<SongPlayer> {
+  bool hidePlayer = false;
   bool isPlay = false;
   late AudioPlayer player;
   late AudioCache audioCache;
@@ -25,12 +28,14 @@ class _SongPlayerState extends State<SongPlayer> {
     // TODO: implement initState
     super.initState();
     setPlayer();
+    Timer(Duration(seconds: 6), () => {hidePlayer = true});
   }
 
   void setPlayer() async {
     player = new AudioPlayer();
     audioCache = new AudioCache(fixedPlayer: player);
     await player.play(widget.songItem.previewUrl!);
+
     player.onDurationChanged.listen((Duration d) {
       setState(() {
         _duration = d;
@@ -79,20 +84,36 @@ class _SongPlayerState extends State<SongPlayer> {
         height: 100,
         width: 100,
         child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-          GestureDetector(
-              child: Icon(
-                icon,
-                size: 100,
-                color: Colors.redAccent,
-              ),
-              onTap: togglePlay),
+          Spacer(),
+          Stack(children: [
+            MusicVirtualizerContainer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 120),
+                    child: GestureDetector(
+                        child: Icon(
+                          icon,
+                          size: 100,
+                          color: Colors.white,
+                        ),
+                        onTap: togglePlay),
+                  )
+                ])
+              ],
+            ),
+          ]),
+          Spacer(),
           Slider(
-              value: _position.inSeconds.toDouble(),
+              inactiveColor: Colors.white,
+              value: _position.inMicroseconds.toDouble(),
               min: 0.0,
-              max: _duration.inSeconds.toDouble(),
+              max: _duration.inMicroseconds.toDouble(),
               onChanged: (double value) {
                 setState(() {
-                  Duration newDuration = Duration(seconds: value.toInt());
+                  Duration newDuration = Duration(microseconds: value.toInt());
                   player.seek(newDuration);
                 });
               }),
@@ -101,13 +122,13 @@ class _SongPlayerState extends State<SongPlayer> {
               Expanded(
                 flex: 2,
                 child: Text(
-                  '       ${_position.toString().split(":")[1]} :  ${_position.toString().split(":")[2].split('.')[0]} ',
-                  style: TextStyle(color: Colors.redAccent),
+                  '       ${_position.toString().split(":")[1]} : ${_position.toString().split(":")[2].split('.')[0]} ',
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
               Text(
-                  '${_duration.toString().split(":")[1]} :  ${_duration.toString().split(":")[2].split('.')[0]}       ',
-                  style: TextStyle(color: Colors.redAccent))
+                  '${_duration.toString().split(":")[1]} : ${_duration.toString().split(":")[2].split('.')[0]}       ',
+                  style: TextStyle(color: Colors.white))
             ],
           ),
         ]),

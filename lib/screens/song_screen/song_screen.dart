@@ -36,21 +36,23 @@ class SongScreenState extends State<SongScreen> {
                 // actions: [SongPlayer(songItem: widget.songItem)],
                 title: Text(titile),
                 floating: true,
-                expandedHeight: height - 100,
+                expandedHeight: height,
                 flexibleSpace: FlexibleSpaceBar(
                     background: Container(
                   decoration: BoxDecoration(
                       image: DecorationImage(
                           image: NetworkImage(img!), fit: BoxFit.cover)),
-                  child: SongPlayer(songItem: widget.songItem),
+                  child: Padding(
+                      padding: EdgeInsets.only(bottom: 100),
+                      child: SongPlayer(songItem: widget.songItem)),
                 )),
               ),
-              // SliverList(
-              //   delegate: SliverChildBuilderDelegate(
-              //     (context, index) => Text('s'),
-              //     childCount: 100,
-              //   ),
-              // )
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) => Text('s'),
+                  childCount: 100,
+                ),
+              )
             ],
           )),
     );

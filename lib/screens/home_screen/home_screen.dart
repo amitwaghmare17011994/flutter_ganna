@@ -33,7 +33,7 @@ class HomeScreenState extends State<HomeScreen> {
     scrollController = ScrollController();
     scrollController.addListener(() {
       setState(() {
-        hideSearch = false;
+        hideSearch = !isAppBarExpanded;
       });
     });
   }
@@ -54,8 +54,9 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        floatingActionButton:
-            Visibility(child: FloatingSearchBar(), visible: !hideSearch),
+        floatingActionButton: Visibility(
+            child: FloatingSearchBar(onSearchSubmited: onSearchSubmited),
+            visible: !hideSearch),
         // floatingActionButton: hideSearch ? Container() : FloatingSearchBar(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
         body: ChangeNotifierProvider(
@@ -73,34 +74,39 @@ class HomeScreenState extends State<HomeScreen> {
                         // floating: true,
                         expandedHeight: 120,
                         actions: <Widget>[Menu()],
-                        flexibleSpace: FlexibleSpaceBar(
-                          background: Container(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Padding(
-                                    padding: EdgeInsets.all(10),
-                                    child: TextField(
-                                      controller: searchTextController,
-                                      onSubmitted: onSearchSubmited,
-                                      onChanged: onSearchSubmited,
-                                      decoration: InputDecoration(
-                                          prefixIcon: Icon(Icons.search),
-                                          suffixIcon: GestureDetector(
-                                              onTap: () {
-                                                onSearchSubmited('');
-                                                searchTextController.text = '';
-                                              },
-                                              child: Icon(Icons.close_rounded)),
-                                          fillColor: Colors.white,
-                                          filled: true,
-                                          contentPadding: EdgeInsets.all(10),
-                                          border: new OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50)),
-                                          hintText: 'Search...'),
-                                    )),
-                              ],
+                        flexibleSpace: Visibility(
+                          visible: hideSearch,
+                          child: FlexibleSpaceBar(
+                            background: Container(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                      padding: EdgeInsets.all(10),
+                                      child: TextField(
+                                        controller: searchTextController,
+                                        onSubmitted: onSearchSubmited,
+                                        onChanged: onSearchSubmited,
+                                        decoration: InputDecoration(
+                                            prefixIcon: Icon(Icons.search),
+                                            suffixIcon: GestureDetector(
+                                                onTap: () {
+                                                  onSearchSubmited('');
+                                                  searchTextController.text =
+                                                      '';
+                                                },
+                                                child:
+                                                    Icon(Icons.close_rounded)),
+                                            fillColor: Colors.white,
+                                            filled: true,
+                                            contentPadding: EdgeInsets.all(10),
+                                            border: new OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(50)),
+                                            hintText: 'Search...'),
+                                      )),
+                                ],
+                              ),
                             ),
                           ),
                         ),

@@ -30,7 +30,9 @@ class MyApp extends StatelessWidget {
         '/splash': (context) => SplashScreen(),
         '/login': (context) => LoginScren()
       },
-      theme: ThemeData(primarySwatch: Colors.red),
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+      ),
     );
   }
 }
