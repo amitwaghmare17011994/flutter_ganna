@@ -57,7 +57,6 @@ class HomeScreenState extends State<HomeScreen> {
         floatingActionButton: Visibility(
             child: FloatingSearchBar(onSearchSubmited: onSearchSubmited),
             visible: !hideSearch),
-        // floatingActionButton: hideSearch ? Container() : FloatingSearchBar(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerTop,
         body: ChangeNotifierProvider(
           create: (context) => GoogleSignInProvider(),

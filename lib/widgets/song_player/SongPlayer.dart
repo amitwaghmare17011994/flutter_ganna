@@ -4,12 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:ganna/models/song_item.dart';
 import 'package:flutter/foundation.dart';
-import 'package:ganna/widgets/music_virtualizer/music_virtualizer.dart';
+// import 'package:ganna/widgets/music_virtualizer/music_virtualizer.dart';
 
 class SongPlayer extends StatefulWidget {
   final SongItem songItem;
-
-  const SongPlayer({Key? key, required this.songItem, bool? isPlay})
+  final ValueSetter onExpandToggle;
+  const SongPlayer(
+      {Key? key,
+      required this.songItem,
+      bool? isPlay,
+      required this.onExpandToggle})
       : super(key: key);
 
   _SongPlayerState createState() => _SongPlayerState();
@@ -22,6 +26,7 @@ class _SongPlayerState extends State<SongPlayer> {
   late AudioCache audioCache;
   Duration _duration = new Duration();
   Duration _position = new Duration();
+  bool isExpanded = false;
 
   @override
   void initState() {
@@ -77,62 +82,73 @@ class _SongPlayerState extends State<SongPlayer> {
   @override
   Widget build(BuildContext context) {
     var icon = isPlay ? Icons.play_circle_fill : Icons.pause_circle_filled;
-
+    var expandIcon = isExpanded ? Icons.fullscreen_exit : Icons.fullscreen;
     return WillPopScope(
       onWillPop: onBackPressed,
-      child: Container(
-        height: 100,
-        width: 100,
-        child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-          Spacer(),
-          Stack(children: [
-            MusicVirtualizerContainer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(children: [
-                  Padding(
-                    padding: EdgeInsets.only(top: 120),
-                    child: GestureDetector(
-                        child: Icon(
-                          icon,
-                          size: 100,
-                          color: Colors.white,
-                        ),
-                        onTap: togglePlay),
-                  )
-                ])
-              ],
-            ),
-          ]),
-          Spacer(),
-          Slider(
-              inactiveColor: Colors.white,
-              value: _position.inMicroseconds.toDouble(),
-              min: 0.0,
-              max: _duration.inMicroseconds.toDouble(),
-              onChanged: (double value) {
-                setState(() {
-                  Duration newDuration = Duration(microseconds: value.toInt());
-                  player.seek(newDuration);
-                });
-              }),
-          Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: Text(
-                  '       ${_position.toString().split(":")[1]} : ${_position.toString().split(":")[2].split('.')[0]} ',
-                  style: TextStyle(color: Colors.white),
-                ),
+      child: Column(children: [
+        Spacer(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Column(children: [
+              Padding(
+                padding: EdgeInsets.only(top: 120),
+                child: GestureDetector(
+                    child: Icon(
+                      icon,
+                      size: 100,
+                      color: Colors.white,
+                    ),
+                    onTap: togglePlay),
+              )
+            ])
+          ],
+        ),
+        Spacer(),
+        Slider(
+            inactiveColor: Colors.white,
+            value: _position.inMicroseconds.toDouble(),
+            min: 0.0,
+            max: _duration.inMicroseconds.toDouble(),
+            onChanged: (double value) {
+              setState(() {
+                Duration newDuration = Duration(microseconds: value.toInt());
+                player.seek(newDuration);
+              });
+            }),
+        Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: Text(
+                '       ${_position.toString().split(":")[1]} : ${_position.toString().split(":")[2].split('.')[0]} ',
+                style: TextStyle(color: Colors.white),
               ),
-              Text(
-                  '${_duration.toString().split(":")[1]} : ${_duration.toString().split(":")[2].split('.')[0]}       ',
-                  style: TextStyle(color: Colors.white))
-            ],
-          ),
-        ]),
-      ),
+            ),
+            Text(
+                '${_duration.toString().split(":")[1]} : ${_duration.toString().split(":")[2].split('.')[0]}       ',
+                style: TextStyle(color: Colors.white))
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            GestureDetector(
+              onTap: () {
+                widget.onExpandToggle(!isExpanded);
+                setState(() {
+                  isExpanded = !isExpanded;
+                });
+              },
+              child: Icon(
+                expandIcon,
+                size: 50,
+                color: Colors.red,
+              ),
+            )
+          ],
+        ),
+      ]),
     );
   }
 }

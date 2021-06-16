@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:ganna/apis/songs_api.dart';
 import 'package:ganna/models/song_item.dart';
+import 'package:ganna/models/songs.dart';
+import 'package:ganna/widgets/song_list/song_list.dart';
 import 'package:ganna/widgets/song_player/SongPlayer.dart';
 
 class SongScreen extends StatefulWidget {
@@ -13,13 +16,26 @@ class SongScreen extends StatefulWidget {
 }
 
 class SongScreenState extends State<SongScreen> {
+  late double playerHeight = 500;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   Future<bool> onBackPressed() async {
     return true;
   }
 
+  onExpandToggle(value) {
+    setState(() {
+      playerHeight = value ? MediaQuery.of(context).size.height : 500;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
+    double height = playerHeight;
 
     var img = widget.songItem.artworkUrl100 != null
         ? widget.songItem.artworkUrl100
@@ -44,15 +60,15 @@ class SongScreenState extends State<SongScreen> {
                           image: NetworkImage(img!), fit: BoxFit.cover)),
                   child: Padding(
                       padding: EdgeInsets.only(bottom: 100),
-                      child: SongPlayer(songItem: widget.songItem)),
+                      child: SongPlayer(
+                        songItem: widget.songItem,
+                        onExpandToggle: onExpandToggle,
+                      )),
                 )),
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => Text('s'),
-                  childCount: 100,
-                ),
-              )
+              SongList(
+                songItem: widget.songItem,
+              ),
             ],
           )),
     );
